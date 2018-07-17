@@ -1,0 +1,18 @@
+#+TITLE Tests for single sign on authentication
+
+* Weblogic and OAuth
+
+  Weblogic doesn't provide a OAuth authentication provider out of the box. This means we need to create a custom implementation.
+
+** TODO Create simple Authentication Provider
+   
+   [[https://docs.oracle.com/cd/E12839_01/web.1111/e13718/atn.htm#DEVSP221][Official Documentation]]
+   [[https://medium.com/@pubudu2013101/custom-authentication-provider-in-web-logic-12c-5e6ca4667149][Example Implementation]], this seems to just use samples not real OAuth2 authentication
+   
+** TODO Autentication Provider needs to authenticate with a OAuth token
+
+   The Authentication Provider needs to use the Authorization Code Grant. [[https://tools.ietf.org/html/rfc6749#section-4.2][RFC 6749, 4.1]]
+
+* APIGEE and  SAML
+
+  
