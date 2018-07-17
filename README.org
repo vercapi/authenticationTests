@@ -15,4 +15,16 @@
 
 * APIGEE and  SAML
 
+  [[https://tools.ietf.org/html/rfc7522][RFC 7522]] Describes a way to use a SAML Assertion for requesting a OAuth2 token.
+
+  Basically SAML is used to authenticate OAuth2 to authorize. This also ensures that existing SAML services can still be used.
+  This [[https://www.slideshare.net/apigee/managing-identities-in-the-world-of-apis][presentation]] gives a high level example.
+
+  APIGEE Seems able to work with SAML as show [[https://apigee.com/about/tags/saml-0][here]]. But is this sufficient?
+  This [[https://github.com/srinandan/rfc7522-saml-profile][repository]] is a custom implementation of RFC 7522.
+
+  
+
+  
+
   
