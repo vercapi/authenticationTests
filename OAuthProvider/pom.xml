@@ -14,7 +14,7 @@
 
   <properties>
       <oracle.home>/opt/oracle/apps/jdev12.2.1.2</oracle.home>
-    <weblogic.version>12.2.1.2</weblogic.version>
+    <weblogic.version>12.2.1-2-0</weblogic.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
@@ -46,9 +46,13 @@
       </systemPath>
     </dependency>
     <dependency>
-      <groupId>com.oracle.weblogic</groupId>
-      <artifactId>wlclient</artifactId>
-      <version>LATEST</version>
+      <groupId>oracle</groupId>
+      <artifactId>wls-api</artifactId>
+      <version>${weblogic.version}</version>
+      <scope>system</scope>
+      <systemPath>
+        ${oracle.home}/wlserver/server/lib/wls-api.jar
+      </systemPath>
     </dependency>
   </dependencies>
 
