@@ -4,19 +4,43 @@
 
   Weblogic doesn't provide a OAuth authentication provider out of the box. This means we need to create a custom implementation.
 
+  We want to request an OAuth token that gives authorization for giving a session ID to a Resource Owner (end user)
+  These are the steps that should be followed in case of an ADF Application deployed on WLS.
+
+  1. weblogic.host:7101/myApp/ -> Try and access the application 
+     - [X] This happens standard
+  2. weblogic.host:7101/adfAuthentication -> Redirect to the authentication servlet
+     - [ ] !!HOW?? Make adfAuthentication do the redirect 
+  3. oauth.host/f5-oauth2/v1/authorize -> Redirect to login page of th OAuth2 provider
+     - [ ] Configure OAuth server to authenticate and redirect with token as parameter
+  4. User logs in, is redirect to the URL below
+  5. weblogic.host:7101/oauth2?token=qhfqus4fhkj6sdfhi2l3zeur -> token is validated and user gets sessionid
+     - [ ] Create Service end point that accepts the token passes it to the WLS Authentication process
+     - [ ] Create Authentication Provider that can varify the OAuth Token
+  6. weblogic.host:7101/myApp -> User is logged in into his application
+
+
+  Additional remarks
+  - If user session is still OK with OAuth provider, don't login immediately continue.
+
 ** TODO Create simple Authentication Provider
    
    [[https://docs.oracle.com/middleware/1221/wls/DEVSP/toc.htm][Official Documentation]]
    [[https://medium.com/@pubudu2013101/custom-authentication-provider-in-web-logic-12c-5e6ca4667149][Example Implementation]], this seems to just use samples not real OAuth2 authentication
+   [[http://www.oracle.com/technetwork/indexes/samplecode/weblogic-sample-522121.html][DB User Athentication Provider example]] Example from oracle (dbuserprovider.zip).
   
 *** Setup project
 
     Initiate maven repository
     #+BEGIN_SRC sh
       mvn archetype:generate  -DarchetypeGroupId=org.apache.maven.archetypes  -DgroupId=be.vercapi.ouath2provider  -DartifactId=OAuthProvider -Dversion=0.1-SNAPSHOT
-    #+END_SRC
+    #+END_SRC    
 
-** TODO [#B] Autentication Provider needs to authenticate with a OAuth token
+** TODO Create end point that can Accept OAuth token
+   
+   This needs to be a servlet that can accept the redirect from the OAuth Server.
+
+** TODO Autentication Provider needs to authenticate with a OAuth token
 
    The Authentication Provider needs to use the Authorization Code Grant. [[https://tools.ietf.org/html/rfc6749#section-4.2][RFC 6749, 4.1]]
 
