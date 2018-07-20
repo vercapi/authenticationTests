@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application" version="12.2.1.12.24" id="DataBindings"
+             SeparateXMLFiles="false" Package="be.vercapi.adfoauth.view" ClientType="Generic">
+  <pageMap>
+    <page path="/Home.jsf" usageId="be_vercapi_adfoauth_view_HomePageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="be_vercapi_adfoauth_view_HomePageDef" path="be.vercapi.adfoauth.view.pageDefs.HomePageDef"/>
+  </pageDefinitionUsages>
+</Application>
