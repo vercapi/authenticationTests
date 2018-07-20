@@ -4,6 +4,7 @@
 
   Weblogic doesn't provide a OAuth authentication provider out of the box. This means we need to create a custom implementation.
 
+  Described below is the end goal.
   We want to request an OAuth token that gives authorization for giving a session ID to a Resource Owner (end user)
   These are the steps that should be followed in case of an ADF Application deployed on WLS.
 
@@ -34,15 +35,98 @@
     Initiate maven repository
     #+BEGIN_SRC sh
       mvn archetype:generate  -DarchetypeGroupId=org.apache.maven.archetypes  -DgroupId=be.vercapi.ouath2provider  -DartifactId=OAuthProvider -Dversion=0.1-SNAPSHOT
-    #+END_SRC    
+    #+END_SRC
 
 ** TODO Create end point that can Accept OAuth token
    
-   This needs to be a servlet that can accept the redirect from the OAuth Server.
+*** TODO Simple proof of concept
 
+    Create an endpoint that can log a user in within ADF.
+
+    Generate maven project
+    #+BEGIN_SRC sh
+      mvn archetype:generate -DarchetypeGroupId=com.oracle.weblogic.archetype -DarchetypeArtifactId=basic-webapp -DarchetypeVersion=12.2.1-0-0 -DgroupId=be.vercapi.OAuthEndpoint -DartifactId=OAuthEndpoint -Dversion=0.1-SNAPSHOT 
+    #+END_SRC
+    
 ** TODO Autentication Provider needs to authenticate with a OAuth token
 
    The Authentication Provider needs to use the Authorization Code Grant. [[https://tools.ietf.org/html/rfc6749#section-4.2][RFC 6749, 4.1]]
+
+** TODO POC Within ADF Application
+
+   ADF Application in ./ADFOAuthTest
+
+*** TODO Make logging in possible via servlet
+    
+**** DONE Ensure login via servlet
+
+     The goal is to make the following URL show 'Hello <username>'
+     #+BEGIN_SRC restclient
+     GET http://127.0.0.1:7101/ADFOAuthTest-ViewController-context-root/faces/OAuth?token=correct
+     #+END_SRC
+ 
+     The most important piece of the code is in file
+     #+BEGIN_SRC java
+       Subject subject = Authentication.login(new URLCallbackHandler("weblogic", "weblogic1"));
+       ServletAuthentication.runAs(subject, req);
+     #+END_SRC
+     [ADFOAuthTest/ViewController/src/be/vercapi/adfoauth/view/OAuthEndPointServlet.java]
+     The snippet above calls the WLS framework to log the user in. ADF Uses this to provides it's own security.
+     This will always login the weblogic user, but proves the concep works
+
+     Test cases
+     - [X] Check that username can be retreived via securityContext.
+     - [X] Check that with ADF Security on we can still access the page.
+     
+
+     Check this version out
+     #+BEGIN_SRC sh
+     git checkout 0f879e94ee185106809ca52f2abeeca31f3df0c9
+     #+END_SRC
+
+**** DONE Ensure automatic redirection
+
+     Create a system that can redirect to the OAuth server
+     
+     #+BEGIN_SRC xml
+        <login-config>
+          <auth-method>FORM</auth-method>
+          <realm-name>jazn.com</realm-name>
+          <form-login-config>
+            <form-login-page>/login</form-login-page>
+            <form-error-page>/error</form-error-page>
+          </form-login-config>
+        </login-config>
+     #+END_SRC
+
+     Form login can hold a reference to a page or a servlet.
+     form-login-page can also hold format like '/../login/faces/login'. So we can also redirect to servlets of other deployments.
+
+     In the example the redirect automaically calls the OAuth servlet thus logging in autom.
+      
+**** DONE Deploy as seperate application
+     
+     The JEE Appliation at ./OAuthEndpoint can be used to login. The following URL can be used to login for the ADF applications.
+     #+BEGIN_SRC restclient
+     http://192.168.74.95:7101/OAuthEndPoint/OAuth?token=correct
+     #+END_SRC
+     
+*** TODO Create a authentication provider that can get a token and validate it
+
+    Test cases:
+    - [ ] Validate based on 1 argument, that should become.
+    - [ ] Assign roles any roles should enable access to ADF Secured resources accessible only to specific groups.
+ 
+*** TODO Enable login system with actual OAuth system
+
+    What grant type will we use here?
+    
+*** TODO Deployment on cluster
+
+    This will need to be deployed on a cluster. There we will test following cases:
+    - [ ] Check login works for all deployed applications.
+    - [ ] Check login works over cluster.
+    - [ ] This application should be deployed as a sepparate application
 
 * APIGEE and  SAML
 
@@ -57,5 +141,6 @@
   
 
   
+* Angular and OAuth
 
-  
+  Implicit grant type
