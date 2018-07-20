@@ -23,6 +23,13 @@
     <servlet-name>MapProxyServlet</servlet-name>
     <servlet-class>oracle.adf.view.faces.bi.webapp.MapProxyServlet</servlet-class>
   </servlet>
+  <servlet>
+    <description>OAuthEndPointServlet</description>
+    <display-name>OAuthEndPointServlet</display-name>
+    <servlet-name>OAuthEndPointServlet</servlet-name>
+    <servlet-class>be.vercapi.adfoauth.view.OAuthEndPointServlet</servlet-class>
+    <enabled>true</enabled>
+  </servlet>
   <servlet-mapping>
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>/faces/*</url-pattern>
@@ -50,6 +57,10 @@
   <servlet-mapping>
     <servlet-name>resources</servlet-name>
     <url-pattern>/bi/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>OAuthEndPointServlet</servlet-name>
+    <url-pattern>/OAuth</url-pattern>
   </servlet-mapping>
   <filter>
     <filter-name>trinidad</filter-name>
