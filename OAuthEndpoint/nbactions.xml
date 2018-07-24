@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>build</actionName>
+            <packagings>
+                <packaging>*</packaging>
+            </packagings>
+            <goals>
+                <goal>compile</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-Deploy</actionName>
+            <displayName>Deploy</displayName>
+            <goals>
+                <goal>deploy</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-Redeploy</actionName>
+            <displayName>Redeploy</displayName>
+            <goals>
+                <goal>redeploy</goal>
+            </goals>
+        </action>
+    </actions>

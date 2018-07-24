@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Basic Webapp"></h:outputText>
+        </ui:define>
+
+        <ui:define name="header">
+            <!--<div class="page-header">-->
+            <div>
+                <h2>Basic Webapp</h2>
+                <p class="lead">This project shows a basic example of a web application working with JSF and CDI to simulate the deposit functionality of bank system.</p>
+            </div>
+        </ui:define>
+
+        <ui:define name="body">
+            <div class="well">
+                <h:form id="deposit_form" styleClass="form">
+                    <h:outputText id="username" value="Username: #{facesContext.externalContext.userPrincipal}"/>
+                </h:form>
+            </div>
+        </ui:define>
+
+        <ui:define name="footer">   
+            <footer>
+                <p>&copy; Company 2015</p>
+            </footer>
+        </ui:define>
+    </ui:composition>
+</html>
+
