@@ -1,0 +1,8 @@
+/OAuthProvider/target/
+/OAuthEndpoint/target/
+ADFOAuthTest/.data/
+ADFOAuthTest/ViewController/classes/
+ADFOAuthTest/ViewController/public_html/WEB-INF/temp/
+/OAuthProvider/.classpath
+/OAuthProvider/.project
+/OAuthProvider/.settings/
