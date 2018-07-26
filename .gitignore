@@ -6,3 +6,6 @@ ADFOAuthTest/ViewController/public_html/WEB-INF/temp/
 /OAuthProvider/.classpath
 /OAuthProvider/.project
 /OAuthProvider/.settings/
+/OAuthEndpoint/.classpath
+/OAuthEndpoint/.project
+OAuthEndpoint/.settings/
