@@ -129,6 +129,7 @@
     This attempt was hinted by this [[https://medium.com/@pubudu2013101/custom-authentication-provider-in-web-logic-12c-5e6ca4667149][article]]
     This worked when supplying a surename password via a URLCallbackhandler as shown in the example.
     
+    
     Code from the login servlet
     #+BEGIN_SRC java 
       Subject vSubject = Authentication.login(new URLCallbackHandler(vUsername, vPassword));
@@ -166,7 +167,7 @@
     This seems much closer to what we actually need.
 
     For this to work we need a custom Identity Assertion Provider, a specific form of Authentication Provider. 
-    So a second attempt started following the [[https://docs.oracle.com/cd/E12839_01/web.1111/e13718/ia.htm#DEVSP244][documentation]].
+    So a second attempt started following the [[https://docs.oracle.com/cd/E12839_01/web.1111/e13718/ia.htm#DEVSP244][documentation]] and this [[http://weblogic-wonders.com/weblogic/2014/01/13/simple-sample-custom-identity-asserter-weblogic-server-12c/][sample]].
     
     The documentation suggests that for a SSO situation an Identity Assertion is a better fit:
     Unlike in a simple authentication situation (described in The Authentication Process), the LoginModules that Identity Assertion providers use do not verify proof 
