@@ -1,3 +1,4 @@
+
 #+TITLE Tests for single sign on authentication
 
 * Weblogic and OAuth
@@ -55,7 +56,7 @@
 ** TODO POC Within ADF Application
 
    ADF Application in ./ADFOAuthTest
-
+   
 *** TODO Make logging in possible via servlet
     
 **** DONE Ensure login via servlet
@@ -111,7 +112,67 @@
      http://192.168.74.95:7101/OAuthEndPoint/OAuth?token=correct
      #+END_SRC
      
+**** TODO Implement Accept OAuth token
+
+     A custom Callbackhandler is used. TokenCallbackhandler is defined in OAuthProvider project.
+     So we need to install that in our local maven repo.
+     #+BEGIN_SRC sh :dir OAuth2Provider
+     mvn install:install-file -Dfile=target/OAuthProvider-0.1-SNAPSHOT.jar -DgroupId=be.vercapi.oauth2provider -DartifactId=OAuth2Provider -Dversion=0.1-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
+     #+END_SRC
+     
+     - [ ] Actually pass token/grant to authentication provider
+     - [ ] Send random number that returns with the callback so we ensure this is the correct request
+
 *** TODO Create a authentication provider that can get a token and validate it
+
+    In a first attempt a custom authentication provider was created following steps in the [[https://docs.oracle.com/cd/E12839_01/web.1111/e13718/atn.htm#DEVSP222][documentation]]. 
+    This attempt was hinted by this [[https://medium.com/@pubudu2013101/custom-authentication-provider-in-web-logic-12c-5e6ca4667149][article]]
+    This worked when supplying a surename password via a URLCallbackhandler as shown in the example.
+    
+    Code from the login servlet
+    #+BEGIN_SRC java 
+      Subject vSubject = Authentication.login(new URLCallbackHandler(vUsername, vPassword));
+      weblogic.servlet.security.ServletAuthentication.runAs(vSubject, vHttpServletRequest);
+    #+END_SRC
+
+    In addition with a custom CallbackHanler and callbackType this no longer worked.
+
+    New code in login servlet
+    #+BEGIN_SRC java
+      Subject subject = Authentication.login(new TokenCallbackhandler(vToken));
+      weblogic.servlet.security.ServletAuthentication.runAs(subject, req);
+    #+END_SRC
+
+    I expected the callback supplied by the init function in the LoginModule to be TokenCallbackhandler but actually was javax.security.auth.login.LoginContext.SecureCallbackHandler
+    #+BEGIN_SRC java
+      public void initialize(Subject pSubject, CallbackHandler pCallbackHandler, Map pSharedState, Map pOptions)
+    #+END_SRC
+
+    So when we call the handle on the callbackhandler we don't directly invoke our custom TokenCallbackhandler but a Callbackhandler from Weblogic.
+    #+BEGIN_SRC java
+      Callback[] callbacks;
+      callbacks = new Callback[1];
+      callbacks[0] = new TokenTypeCallback();
+
+      callbackHandler.handle(callbacks);
+    #+END_SRC
+    This callback handler throws an error when you don't supply a username and password. It seems this isn't the correct approach.
+
+    After inspecting the documentation for weblogic.security.services.Authentication to try and see what actually happens to the CallbackHandler with the login method.
+    I found this.
+    #+BEGIN_SRC java
+      public static Subject Authentication.assertIdentity(String tokenType, Object token) throws LoginException
+    #+END_SRC
+    This seems much closer to what we actually need.
+
+    For this to work we need a custom Identity Assertion Provider, a specific form of Authentication Provider. 
+    So a second attempt started following the [[https://docs.oracle.com/cd/E12839_01/web.1111/e13718/ia.htm#DEVSP244][documentation]].
+    
+    The documentation suggests that for a SSO situation an Identity Assertion is a better fit:
+    Unlike in a simple authentication situation (described in The Authentication Process), the LoginModules that Identity Assertion providers use do not verify proof 
+    material such as usernames and passwords; they simply verify that the user exists.
+    
+    
 
     Test cases:
     - [ ] Validate based on 1 argument, that should become.
