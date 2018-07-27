@@ -25,7 +25,7 @@ import weblogic.security.spi.SecurityServices;
  */
 public class Auth2AuthenticationProviderImpl implements AuthenticationProviderV2, IdentityAsserterV2 {
 
-  private NonCatalogLogger logger = new NonCatalogLogger("OAUTHSEC");
+  private NonCatalogLogger LOG = new NonCatalogLogger("OAUTHSEC");
 
   private String description; // a description of this provider
   private String OAuthURL; //URL Of the OAuth server
@@ -66,15 +66,15 @@ public class Auth2AuthenticationProviderImpl implements AuthenticationProviderV2
 
   @Override
   public void shutdown() {
-    logger.debug("Auth2AuthenticationPorviderImpl shutdown");
+    LOG.debug("Auth2AuthenticationPorviderImpl shutdown");
   }
 
   @Override
   public CallbackHandler assertIdentity(String type, Object token, ContextHandler contextHandler)
       throws IdentityAssertionException {
-    System.out.println("Asserting Identity");
+    LOG.trace("Asserting Identity");
     if (OAuth2AsserterTokenTypes.OAuthToken.equals(type)) {
-      System.out.println("Checking token: "+token);
+      LOG.trace("Checking token: "+token);
       if ("correct".equals(token)) {
         return new SimpleCallbackHandler("weblogic");
       }
