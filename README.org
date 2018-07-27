@@ -125,6 +125,8 @@
 
 *** TODO Create a authentication provider that can get a token and validate it
 
+**** Pure Authentication Provider (Failed attempt)
+
     In a first attempt a custom authentication provider was created following steps in the [[https://docs.oracle.com/cd/E12839_01/web.1111/e13718/atn.htm#DEVSP222][documentation]]. 
     This attempt was hinted by this [[https://medium.com/@pubudu2013101/custom-authentication-provider-in-web-logic-12c-5e6ca4667149][article]]
     This worked when supplying a surename password via a URLCallbackhandler as shown in the example.
@@ -159,6 +161,10 @@
     #+END_SRC
     This callback handler throws an error when you don't supply a username and password. It seems this isn't the correct approach.
 
+**** Identity Asserter Provider (Correct approach)
+
+     This has been developed in the branch (feature/IdentityAssertion)
+
     After inspecting the documentation for weblogic.security.services.Authentication to try and see what actually happens to the CallbackHandler with the login method.
     I found this.
     #+BEGIN_SRC java
@@ -172,12 +178,23 @@
     The documentation suggests that for a SSO situation an Identity Assertion is a better fit:
     Unlike in a simple authentication situation (described in The Authentication Process), the LoginModules that Identity Assertion providers use do not verify proof 
     material such as usernames and passwords; they simply verify that the user exists.
-    
-    
 
+
+    When all code is deployed following message will appear:
+    "currentSubject: principals=[] does not have permission to assert identity"
+    
+    To give the custom identity aserter permissions following steps need to be executed (Doc ID: 1557527.1):
+    - Open the WebLogic Console and from the Domain Structure list, follow the path "Security Realms" > "myrealm"
+    - Click the Roles and Policies tab on the screen that appears
+    - Click the Realm Polices tab located on this window and expand the Domain node that appears to expose the name of the domain being used
+    - Expand this node to show the Domain policies available. One of the available policies is labeled Identity Assertion which has a radio button in front of it
+    - Select this radio button and click the Create Policy button which should now be active
+    - Click the Add Conditions button on the page that appears, and select "Allow Access to Everyone" from the predicate list
+    - After this, save the changes.
+    
     Test cases:
-    - [ ] Validate based on 1 argument, that should become.
-    - [ ] Assign roles any roles should enable access to ADF Secured resources accessible only to specific groups.
+    - [X] Validate based on 1 argument, that should be the OAuthToken.   
+  
  
 *** TODO Enable login system with actual OAuth system
 
