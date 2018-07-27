@@ -27,7 +27,7 @@ public class SimpleCallbackHandler implements  CallbackHandler{
       }
  
       // send the user name to the name callback:
-      NameCallback nameCallback = (NapmeCallback)callback;
+      NameCallback nameCallback = (NameCallback)callback;
       nameCallback.setName(username);
     }
 	}
