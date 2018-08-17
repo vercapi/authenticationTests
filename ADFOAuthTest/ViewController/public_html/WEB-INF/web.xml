@@ -24,13 +24,6 @@
       <servlet-class>oracle.adf.view.faces.bi.webapp.MapProxyServlet</servlet-class>
    </servlet>
    <servlet>
-      <description>OAuthEndPointServlet</description>
-      <display-name>OAuthEndPointServlet</display-name>
-      <servlet-name>OAuthEndPointServlet</servlet-name>
-      <servlet-class>be.vercapi.adfoauth.view.OAuthEndPointServlet</servlet-class>
-      <enabled>true</enabled>
-   </servlet>
-   <servlet>
       <servlet-name>adfAuthentication</servlet-name>
       <servlet-class>oracle.adf.share.security.authentication.AuthenticationServlet</servlet-class>
       <load-on-startup>1</load-on-startup>
@@ -69,10 +62,6 @@
    <servlet-mapping>
       <servlet-name>resources</servlet-name>
       <url-pattern>/bi/*</url-pattern>
-   </servlet-mapping>
-   <servlet-mapping>
-      <servlet-name>OAuthEndPointServlet</servlet-name>
-      <url-pattern>/OAuth</url-pattern>
    </servlet-mapping>
    <servlet-mapping>
       <servlet-name>adfAuthentication</servlet-name>
@@ -203,7 +192,7 @@
       <auth-method>FORM</auth-method>
       <realm-name>jazn.com</realm-name>
       <form-login-config>
-         <form-login-page>/login</form-login-page>
+         <form-login-page>/hold</form-login-page>
          <form-error-page>/error</form-error-page>
       </form-login-config>
    </login-config>

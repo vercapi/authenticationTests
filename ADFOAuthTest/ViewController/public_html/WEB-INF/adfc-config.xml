@@ -3,4 +3,10 @@
   <view id="Home">
     <page>/Home.jsf</page>
   </view>
+  <managed-bean id="__1">
+    <managed-bean-name>backing_hold</managed-bean-name>
+    <managed-bean-class>be.vercapi.adfoauth.view.backing.Hold</managed-bean-class>
+    <managed-bean-scope>backingBean</managed-bean-scope>
+    <!--oracle-jdev-comment:managed-bean-jsp-link:1hold.jsf-->
+  </managed-bean>
 </adfc-config>

@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+   <af:document title="hold.jsf" id="d1" binding="#{backingBeanScope.backing_hold.d1}">
+      <af:form id="f1" binding="#{backingBeanScope.backing_hold.f1}">
+		<af:outputText is="ot1" value="Holding page"/>
+		</af:form>
+   </af:document>
+   <!--oracle-jdev-comment:auto-binding-backing-bean-name:backing_hold-->
+</f:view>
