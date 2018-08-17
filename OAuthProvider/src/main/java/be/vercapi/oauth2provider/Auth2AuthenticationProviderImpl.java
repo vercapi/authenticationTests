@@ -75,8 +75,9 @@ public class Auth2AuthenticationProviderImpl implements AuthenticationProviderV2
     LOG.trace("Asserting Identity");
     if (OAuth2AsserterTokenTypes.OAuthToken.equals(type)) {
       LOG.trace("Checking token: "+token);
-      if ("correct".equals(token)) {
-        return new SimpleCallbackHandler("weblogic");
+      OAuthValidation vOAuthValidation = OAuthValidation.initOAuthValidation(token.toString());
+      if (vOAuthValidation.isValid()) {
+        return new SimpleCallbackHandler(vOAuthValidation.getUsername());
       }
     }
 
