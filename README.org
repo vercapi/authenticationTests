@@ -191,6 +191,10 @@
     - Select this radio button and click the Create Policy button which should now be active
     - Click the Add Conditions button on the page that appears, and select "Allow Access to Everyone" from the predicate list
     - After this, save the changes.
+
+    OR
+
+    Domain > Security > Policies > Identity Assertion 
     
     Test cases:
     - [X] Validate based on 1 argument, that should be the OAuthToken.   
