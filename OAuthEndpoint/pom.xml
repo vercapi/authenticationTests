@@ -186,7 +186,7 @@
         oracleServerName
         -->
         <configuration> 
-          <middlewareHome>/opt/oracle/apps/jdev12.2.1.2</middlewareHome>
+          <middlewareHome>C:/Oracle/jdev12.2.1/</middlewareHome>
         </configuration> 
         <executions>
           <!--Deploy the application to the server-->

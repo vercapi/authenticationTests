@@ -13,14 +13,13 @@
   <url>http://www.example.com</url>
 
   <properties>
-    <oracle.home>/opt/oracle/apps/jdev12.2.1.2</oracle.home>
-    <weblogic.version>12.2.1-2-0</weblogic.version>
+    <oracle.home>C:/Oracle/jdev12.2.1</oracle.home>
+    <weblogic.version>12.2.1-0-0</weblogic.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
     
-    <oracle.home>/opt/oracle/apps/jdev12.2.1.2/</oracle.home>
-    <weblogic.version>12.2.1.2</weblogic.version>
+    <weblogic.version>12.2.1.0</weblogic.version>
     <domain.dir>${oracle.home}/wlserver/server/</domain.dir>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -67,6 +66,24 @@
       <systemPath>
         ${oracle.home}/wlserver/server/lib/wls-api.jar
       </systemPath>
+    </dependency>
+    <dependency>
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>javax.ws.rs-api</artifactId>
+      <version>2.0</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-client</artifactId>
+      <version>2.5.1</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>com.oracle.weblogic</groupId>
+      <artifactId>json</artifactId>
+      <version>12.2.1-2-0</version>
+      <type>jar</type>
     </dependency>
   </dependencies>
 
@@ -215,7 +232,7 @@
       <id>tools-jar-in-plugin</id>
       <activation>
         <os>
-          <family>linux</family>
+          <family>windows</family>
         </os>
       </activation>
       <build>
