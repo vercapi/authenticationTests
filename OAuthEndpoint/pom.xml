@@ -153,7 +153,7 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>OAuthEndPoint</finalName>
+    <finalName>OAuth</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
