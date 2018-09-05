@@ -31,6 +31,8 @@ public class Auth2AuthenticationProviderImpl implements AuthenticationProviderV2
   private String OAuthURL; //URL Of the OAuth server
 
   private LoginModuleControlFlag controlFlag; // how this provider's login module should be used during the JAAS login
+  
+  private OAuthAuthenticationMBean fMBean;
 
   @Override
   public AppConfigurationEntry getLoginModuleConfiguration() {
@@ -54,9 +56,9 @@ public class Auth2AuthenticationProviderImpl implements AuthenticationProviderV2
 
   @Override
   public void initialize(ProviderMBean pmb, SecurityServices ss) {
-    OAuthAuthenticationMBean vMBean = (OAuthAuthenticationMBean) pmb;
+    fMBean = (OAuthAuthenticationMBean) pmb;
 
-    description = vMBean.getDescription();
+    description = fMBean.getDescription();
   }
 
   @Override
@@ -75,7 +77,8 @@ public class Auth2AuthenticationProviderImpl implements AuthenticationProviderV2
     LOG.trace("Asserting Identity");
     if (OAuth2AsserterTokenTypes.OAuthToken.equals(type)) {
       LOG.trace("Checking token: "+token);
-      OAuthValidation vOAuthValidation = OAuthValidation.initOAuthValidation(token.toString());
+      OAuthValidation vOAuthValidation = OAuthValidation.initOAuthValidation(token.toString(),
+              fMBean.getClientId(), fMBean.getClientSecret(), fMBean.getIntrospectionOpenidURL());
       if (vOAuthValidation.isValid()) {
         return new SimpleCallbackHandler(vOAuthValidation.getUsername());
       }
