@@ -151,6 +151,24 @@
       <version>6.0</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>javax.ws.rs-api</artifactId>
+      <version>2.0</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-client</artifactId>
+      <version>2.5.1</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>com.oracle.weblogic</groupId>
+      <artifactId>json</artifactId>
+      <version>12.2.1-2-0</version>
+      <type>jar</type>
+    </dependency>
   </dependencies>
   <build>
     <finalName>OAuth</finalName>
@@ -169,7 +187,7 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>2.1.1</version>
         <configuration>
-          <failOnMissingWebXml>false</failOnMissingWebXml>
+          <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
         </configuration>
       </plugin>
       <plugin>
@@ -179,38 +197,40 @@
         <!--
         You can find and redefine the following variables in the parent pom file arccording to your environment.
   
-        oracleMiddlewareHome
-        oracleServerUrl
-        oracleUsername
-        oraclePassword
-        oracleServerName
-        -->
-        <configuration> 
-          <middlewareHome>C:/Oracle/jdev12.2.1/</middlewareHome>
-        </configuration> 
-        <executions>
-          <!--Deploy the application to the server-->
-          <execution>
-            <phase>pre-integration-test</phase> 
-            <goals> 
-              <goal>redeploy</goal> 
-            </goals>
-            <configuration> 
-              <action></action>
-              <!--The admin URL where the app is deployed. Here use the plugin's default value t3://localhost:7001-->
-              <adminurl>t3://localhost:7101</adminurl>
-              <user>weblogic</user> 
-              <password>weblogic1</password>
-              <!--The location of the file or directory to be deployed-->
-              <source>${project.build.directory}/${project.build.finalName}.${project.packaging}</source>
-              <!--The target servers where the application is deployed. Here use the plugin's default value AdminServer-->
-              <!--targets>${oracleServerName}</targets-->
-              <verbose>true</verbose> 
-              <name>${project.build.finalName}</name>
-            </configuration> 
-          </execution> 
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+                oracleMiddlewareHome
+                oracleServerUrl
+                oracleUsername
+                oraclePassword
+                oracleServerName
+                -->
+                <configuration> 
+                    <middlewareHome>C:/Oracle/jdev12.2.1/</middlewareHome>
+                </configuration> 
+                <executions>
+                    <!--Deploy the application to the server-->
+                    <execution>
+                        <phase>pre-integration-test</phase> 
+                        <goals>
+                            <goal>redeploy</goal> 
+                        </goals>
+                        <configuration> 
+                            <action></action>
+                            <!--The admin URL where the app is deployed. Here use the plugin's default value t3://localhost:7001-->
+                            <adminurl>t3://localhost:7101</adminurl>
+                            <user>weblogic</user>
+                            <password>weblogic1</password>
+                            <!--The location of the file or directory to be deployed-->
+                            <source>${project.build.directory}/${project.build.finalName}.${project.packaging}</source>
+                            <!--The target servers where the application is deployed. Here use the plugin's default value AdminServer-->
+                            <targets>DefaultServer</targets>
+                            <upload>false</upload>
+                            <remote>false</remote>
+                            <verbose>true</verbose> 
+                            <name>${project.build.finalName}</name>
+                        </configuration> 
+                    </execution> 
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

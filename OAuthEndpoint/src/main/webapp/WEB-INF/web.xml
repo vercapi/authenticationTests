@@ -13,18 +13,27 @@
     <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.xhtml</url-pattern>
+  </servlet-mapping>
   <servlet>
       <servlet-name>OAuthCallbackServlet</servlet-name>
       <servlet-class>be.vercapi.OAuthEndpoint.OAuthEndPointServlet</servlet-class>
       <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>Faces Servlet</servlet-name>
-    <url-pattern>*.xhtml</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
       <servlet-name>OAuthCallbackServlet</servlet-name>
       <url-pattern>/OAuth</url-pattern>
+  </servlet-mapping>
+  <servlet>
+      <servlet-name>LoginRedirectServlet</servlet-name>
+      <servlet-class>be.vercapi.OAuthEndpoint.LoginRedirectServlet</servlet-class>
+      <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>LoginRedirectServlet</servlet-name>
+      <url-pattern>/Login</url-pattern>
   </servlet-mapping>
   <session-config>
     <session-timeout>30</session-timeout>

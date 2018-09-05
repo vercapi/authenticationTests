@@ -46,11 +46,26 @@
       Default = "new String[] {&quot;OAuthToken&quot;}"
       />
 
-  <!--
-      <MBeanAttribute
-      Name = "URL"
+  <MBeanAttribute
+      Name = "ClientId"
       Type = "java.lang.String"
       Writeable = "true"
-      Default = "${authentication.services.url}"
-      />-->
+      Default = "&quot;&quot;"
+      />
+  
+     <MBeanAttribute
+      Name = "ClientSecret"
+      Type = "java.lang.String"
+      Writeable = "true"
+      Default = "&quot;&quot;"
+      />
+  
+    <MBeanAttribute
+      Name = "IntrospectionOpenidURL"
+      Type = "java.lang.String"
+      Writeable = "true"
+      Default = "&quot;https://localhost:9443/f5-oauth2/v1/&quot;"
+      />
+    
+    
 </MBeanType>
