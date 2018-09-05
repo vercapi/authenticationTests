@@ -1,29 +1,22 @@
 
 #+TITLE Tests for single sign on authentication
 
-* Weblogic and OAuth
+* Weblogic and OpenID
 
-  Weblogic doesn't provide a OAuth authentication provider out of the box. This means we need to create a custom implementation.
+  Weblogic doesn't provide a OAuth/OpenID authentication provider out of the box for our purposes. This means we need to create a custom implementation.
 
   Described below is the end goal.
   We want to request an OAuth token that gives authorization for giving a session ID to a Resource Owner (end user)
   These are the steps that should be followed in case of an ADF Application deployed on WLS.
 
-  1. weblogic.host:7101/myApp/ -> Try and access the application 
-     - [X] This happens standard
-  2. weblogic.host:7101/adfAuthentication -> Redirect to the authentication servlet
-     - [ ] !!HOW?? Make adfAuthentication do the redirect 
-  3. oauth.host/f5-oauth2/v1/authorize -> Redirect to login page of th OAuth2 provider
-     - [ ] Configure OAuth server to authenticate and redirect with token as parameter
-  4. User logs in, is redirect to the URL below
-  5. weblogic.host:7101/oauth2?token=qhfqus4fhkj6sdfhi2l3zeur -> token is validated and user gets sessionid
-     - [ ] Create Service end point that accepts the token passes it to the WLS Authentication process
-     - [ ] Create Authentication Provider that can varify the OAuth Token
-  6. weblogic.host:7101/myApp -> User is logged in into his application
+  1. When accessing a protected resource redirect the user to login page of authentication provider.
+  2. User can login on on the authentivation provider's login page
+  4. User is granted a session for the credentials he used logging in in the authetication provider's login page
+  3. User is redirected to the resource he was trying to access in step 1.
 
 
   Additional remarks
-  - If user session is still OK with OAuth provider, don't login immediately continue.
+  - If user session is still OK with authentication provider, don't login immediately continue.
 
 ** TODO Create simple Authentication Provider
    
@@ -49,6 +42,7 @@
       mvn archetype:generate -DarchetypeGroupId=com.oracle.weblogic.archetype -DarchetypeArtifactId=basic-webapp -DarchetypeVersion=12.2.1-0-0 -DgroupId=be.vercapi.OAuthEndpoint -DartifactId=OAuthEndpoint -Dversion=0.1-SNAPSHOT 
     #+END_SRC
     
+    
 ** TODO Autentication Provider needs to authenticate with a OAuth token
 
    The Authentication Provider needs to use the Authorization Code Grant. [[https://tools.ietf.org/html/rfc6749#section-4.2][RFC 6749, 4.1]]
@@ -58,7 +52,7 @@
    ADF Application in ./ADFOAuthTest
    
 *** TODO Make logging in possible via servlet
-    
+   ii 
 **** DONE Ensure login via servlet
 
      The goal is to make the following URL show 'Hello <username>'
