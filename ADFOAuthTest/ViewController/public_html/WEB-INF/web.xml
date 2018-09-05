@@ -28,13 +28,6 @@
       <servlet-class>oracle.adf.share.security.authentication.AuthenticationServlet</servlet-class>
       <load-on-startup>1</load-on-startup>
    </servlet>
-   <servlet>
-      <description>LoginServlet</description>
-      <display-name>LoginServlet</display-name>
-      <servlet-name>LoginServlet</servlet-name>
-      <servlet-class>be.vercapi.adfoauth.view.LoginServlet</servlet-class>
-      <enabled>true</enabled>
-   </servlet>
    <servlet-mapping>
       <servlet-name>Faces Servlet</servlet-name>
       <url-pattern>/faces/*</url-pattern>
@@ -66,10 +59,6 @@
    <servlet-mapping>
       <servlet-name>adfAuthentication</servlet-name>
       <url-pattern>/adfAuthentication</url-pattern>
-   </servlet-mapping>
-   <servlet-mapping>
-      <servlet-name>LoginServlet</servlet-name>
-      <url-pattern>/login</url-pattern>
    </servlet-mapping>
    <filter>
       <filter-name>JpsFilter</filter-name>
@@ -190,9 +179,8 @@
    </security-constraint>
    <login-config>
       <auth-method>FORM</auth-method>
-      <realm-name>jazn.com</realm-name>
       <form-login-config>
-         <form-login-page>/hold</form-login-page>
+         <form-login-page>/../OAuth/Login</form-login-page>
          <form-error-page>/error</form-error-page>
       </form-login-config>
    </login-config>
