@@ -56,6 +56,7 @@ public class OAuthEndPointServlet extends HttpServlet {
     
     //URL Session parameter
     final static String REDIRECT = "redirect";
+    final static String TOKEN ="token";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -76,6 +77,7 @@ public class OAuthEndPointServlet extends HttpServlet {
             
             String vToken = getToken(vCode, LoginRedirectServlet.getRedirectURI().toString());
             LOG.finest("Token: "+vToken);
+            req.getSession().setAttribute(TOKEN, vToken);
             
             Subject subject = Authentication.assertIdentity("OAuthToken", vToken);
             ServletAuthentication.runAs(subject, req);
