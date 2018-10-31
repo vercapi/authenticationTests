@@ -39,7 +39,7 @@ public class LoginRedirectServlet extends HttpServlet {
             LOG.finest("Session ID: "+req.getSession().getId());
             String vState = UUID.randomUUID().toString();
             req.getSession().setAttribute(OAuthEndPointServlet.STATE, vState);
-            resp.sendRedirect(OAuthProperties.AUTHORIZATION_URI.getValue()+"?client_id="+OAuthProperties.CLIENT_ID.getValue()+"&scope=auth_a_hat&response_type=code&state="+vState+"&redirect_uri="+URLEncoder.encode(getRedirectURI().toString(), "UTF-8"));
+            resp.sendRedirect(OAuthProperties.AUTHORIZATION_URI.getValue()+"?client_id="+OAuthProperties.CLIENT_ID.getValue()+"&scope=auth_a_hat openid email profile&response_type=code&token_content_type=jwt&state="+vState+"&redirect_uri="+URLEncoder.encode(getRedirectURI().toString(), "UTF-8"));
             
             req.getSession().setAttribute(OAuthEndPointServlet.REDIRECT, req.getHeader("referer"));
         } catch (IOException e) {

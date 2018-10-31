@@ -111,6 +111,8 @@ public class OAuthEndPointServlet extends HttpServlet {
         vFormData.add("code", pCode);
         vFormData.add("client_id", OAuthProperties.CLIENT_ID.getValue());
         vFormData.add("client_secret", OAuthProperties.CLIENT_SECRET.getValue());
+        vFormData.add("token_content_type", "jwt");
+        vFormData.add("response_type", "token");
         Entity vForm = Entity.form(vFormData);
 
         Response vResponse = target.path("token")
